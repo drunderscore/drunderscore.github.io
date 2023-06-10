@@ -18,7 +18,7 @@ I've been a system administrator for a few years, running dedicated and virtuali
 
 ## Livestream Production
 ### Team Fortress 2
-I'm a producer for [teamfortress.tv](https://teamfortress.tv) and [Fireside Casts](https://twitch.tv/firesidecasts). I've done work with [RESUP.GG](https://resup.gg), [EssentialsTF](https://essentials.tf/), [CappingTV](https://cappingtv.com), and [Seasonalander](https://twitch.tv/seasonalander) in the past.
+I'm a producer for [Fireside Casts](https://twitch.tv/firesidecasts) and [KritzKast](https://twitch.tv/kritzkast). I often do work with [RESUP.GG](https://resup.gg), [EssentialsTF](https://essentials.tf/), [CappingTV](https://cappingtv.com), [teamfortress.tv](https://teamfortress.tv), and [Seasonalander](https://twitch.tv/seasonalander) in the past.
 
 I've created software and tools specifically made to aid in observation and broadcast of TF2. These tools are private, but do not hesitate to get in contact if you wish to learn more.
 
