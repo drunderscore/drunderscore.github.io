@@ -24,4 +24,4 @@ I've created software and tools specifically made to aid in observation and broa
 
 ## How _should_ I get in contact?
 If you'd like to be formal and official, or are offering me a job: [Email me](mailto:james@jame.xyz)  
-Otherwise, message me on Discord, you'll get a quicker response: `Dr. Underscore#2918`
+Otherwise, message me on Discord, you'll get a quicker response: `dr.underscore`
