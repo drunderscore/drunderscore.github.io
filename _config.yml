@@ -2,9 +2,10 @@
 menu:
   Home: /
   Archives: /archives
+  About: /about
   # change github and email values to your own addresses
-  Github: https://github.com/<your-github-username>
-  Email: mailto:<your-email-address>
+  Github: https://github.com/drunderscore
+  Email: mailto:james@jame.xyz
 rss: /atom.xml
 
 # Set to false to disable banner
