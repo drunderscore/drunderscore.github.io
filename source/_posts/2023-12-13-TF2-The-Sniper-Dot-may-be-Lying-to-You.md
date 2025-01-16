@@ -1,6 +1,11 @@
 ---
-layout: post
 title: "TF2: The Sniper Dot may be Lying to You"
+category: Reverse Engineering
+tags:
+- tf2
+- networking
+- source engine
+excerpt: An investigation into why the Sniper Dot isn't true to itself, combined with a few quick lessons into the depth of the Source Engine.
 ---
 
 Recently, the following clip was shared and I happened to stumble across it in a Discord chat. Take a look:
@@ -52,23 +57,23 @@ The position of the dot is calculated in 3 different ways:
 Unfortunately for Valve (and us), there isn't just a single problem at hand here...
 
 - Due to the reduced precision of eye angles from non-local players as described above, when the client calculates the position of the dot, it's result is somewhat different than what the server calculates using it's full-precision eye angles. This results in deviation when tracing the ray from the player's eye position, and becomes even further disjointed with the server as the distance increases. It may even collide with a brush or entity prematurely on the client, where it hasn't on the server.
-[![A pink cube and a red cube against a backdrop. The pink cube is positioned above the red cube, quite a bit higher.]({{ site.baseurl }}/images/2023-12-13/reduced_angle_precision.png)]({{ site.baseurl }}/images/2023-12-13/reduced_angle_precision.png)
+[![A pink cube and a red cube against a backdrop. The pink cube is positioned above the red cube, quite a bit higher.](/images/2023-12-13/reduced_angle_precision.png)](/images/2023-12-13/reduced_angle_precision.png)
 > The pink cube is the server's position, whilst the red cube is the position the sniper dot is actually being rendered.
 
 - Now, because Valve, the supposed "render" position of the entity isn't actually located where the sprite is being rendered, but rather is identical to the position of the entity itself. This creates a new problem: culling! Culling is entirely based on the render position of the entity -- if it is not within your frustum, it is not rendered. However, because the render position is incorrect, it can easily become the case where the sprite is positioned within your frustum, but the entity is not. This causes the entity to be culled, and will not be drawn, even though it would have been visible on the screen.
-<video width="640" height="360" loop controls src="{{ site.baseurl }}/images/2023-12-13/incorrect_render_origin.mp4"></video>
+<video width="640" height="360" loop controls src="/images/2023-12-13/incorrect_render_origin.mp4"></video>
 > The red cube (and therefore, sniper dot) disappear as the pink cube goes out of view, even though the dot was still visible.
 
 - **Now**, (once again) because Valve, when the client and server both go to ray-trace the sniper dot, to see which brush or entity it should be positioned up against, they end up differing. The client considers certain solids that the server does not, resulting in further desync from the entity's position and the rendered sprite's position. This makes it trivially easy for the issue above to appear.
-[![Snakewater lower lobby, near shutter, with lower lobby and shutter in view. The red cube is positioned at the shutter, whilst the pink cube is positioned at the back of the wall perpendicular to the shutter, next to the ramp to lower.]({{ site.baseurl }}/images/2023-12-13/differing_ray_traces.png)]({{ site.baseurl }}/images/2023-12-13/differing_ray_traces.png)
+[![Snakewater lower lobby, near shutter, with lower lobby and shutter in view. The red cube is positioned at the shutter, whilst the pink cube is positioned at the back of the wall perpendicular to the shutter, next to the ramp to lower.](/images/2023-12-13/differing_ray_traces.png)](/images/2023-12-13/differing_ray_traces.png)
 > The client's ray-trace properly stopped at the shutter, drawing the sniper dot there. However, the server's ray-trace passed through the shutter, hitting the back of the wall.
 
 - **AND NOW** comes another problem: If you recall, there was another local-player only data table I mentioned: `DT_LocalPlayerExclusive`. This table contains an important property named `m_vecViewOffset`. This is a 3-component vector that holds the view offset of the player. This changes when the offset of their view changes, such as when crouching. It is combined with the player's position to calculate the eye position. The keen-eyed readers may have already realized the issue: This is _local-player only_, and yet other clients are attempting to use it when calculating the eye position, which is then in turn used as the starting position of the ray-trace for the sniper dot! This results in the player's position being combined with a zero-vector, resulting in the wrong position when the player crouches, and thus the dot never moves even though it totally has.
-<video width="640" height="360" loop controls src="{{ site.baseurl }}/images/2023-12-13/vec_view_offset_missing.mp4"></video>
+<video width="640" height="360" loop controls src="/images/2023-12-13/vec_view_offset_missing.mp4"></video>
 > As the player crouches, the sniper dot's position also moves (and so would the shot). Despite that, the rendered sniper dot does not move.
 
 _Finally_, if you combine the miscalculated server ray-trace WITH the change in position relative to the dormancy of the owner, you get this: the sniper dot being rendered THROUGH the shutter door even though it's closed! I am almost certain this is what is observed in the introduction video.
-[![Snakewater lower lobby, from the perspective of upper lobby, facing the back wall. The shutter is not in view, but it is closed. The BLU sniper dot is seen on that back wall.]({{ site.baseurl }}/images/2023-12-13/sniper_dot_through_shutter.png)]({{ site.baseurl }}/images/2023-12-13/sniper_dot_through_shutter.png)
+[![Snakewater lower lobby, from the perspective of upper lobby, facing the back wall. The shutter is not in view, but it is closed. The BLU sniper dot is seen on that back wall.](/images/2023-12-13/sniper_dot_through_shutter.png)](/images/2023-12-13/sniper_dot_through_shutter.png)
 
 ## Conclusion
 I'm not sure what else you expect me to say here other than: Yeah it's broken. Multiple issues come together to make it an incredibly inaccurate piece of visualization.

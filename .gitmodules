@@ -1,0 +1,4 @@
+[submodule "themes/hexo-theme-aero-dual"]
+	path = themes/hexo-theme-aero-dual
+	url = https://github.com/drunderscore/drunderscore.github.io
+	branch = theme
