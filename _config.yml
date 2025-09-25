@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: James' Ramblings
-subtitle: 'James Puleo (Dr. Underscore)'
+title: resin's ramblings
+subtitle: "listen to resin"
 description: ''
 keywords:
-author: James Puleo
+author: resin
 language: en
 timezone: America/New_York
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://jame.xyz
+url: https://blog.jame.xyz
 permalink: :title/
 permalink_defaults:
 pretty_urls:
