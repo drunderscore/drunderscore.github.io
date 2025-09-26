@@ -144,17 +144,10 @@ This causes all following allocation for that depth and following depths to no l
 
 It should be the case that, _relatively_ speaking, any allocations following this would have an equal offset from each other every time, no matter if the address itself has shifted, because these allocations are still deterministic in order. However, due to alignment and underlying block size restrictions, occasionally there is slightly more (wasted) memory given to an allocation attempting to achieve a particular alignment.
 
-This heap misalignment occurs on the 5th `zSceneInit` invocation, and every 4 invocations following, _always_.
+This heap misalignment occurs on every 4th `zSceneInit` invocation, _always_.
 
 ## Rule of 4s
-This heap misalignment, and the manipulation of it, is the _Rule of 4s_ -- every 4 invocations past the 5th will be misaligned. If the number of scene loads, minus one, is divisible by 4, then the heap is misaligned.
-
-### Counting scene loads
-- Reaching the main menu _ever_ counts as a scene load.
-  - This includes during boot, after the FMVs.
-- Seeing the loading screen counts as a load.
-
-Being misaligned is the _uncommon_ case, whilst being aligned is the _common_ case.
+This heap misalignment, and the manipulation of it, is the _Rule of 4s_. Being misaligned is the _uncommon_ case, whilst being aligned is the _common_ case. Employing the Rule of 4s means tracking your load count throughout the entire lifetime of the game from boot.
 
 ## Mindy Skip Revisited
 The original text had failed to go over an important possibility of this trick: complete failure, and crashing soon after the race beginning. Now known, this was the result of heap misalignment.
