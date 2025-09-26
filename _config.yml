@@ -7,7 +7,7 @@ title: resin's ramblings
 subtitle: "listen to resin"
 description: ''
 keywords:
-author: resin
+author: 🩷 resin
 language: en
 timezone: America/New_York
 
@@ -96,7 +96,16 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-aero-dual
+theme: hexo-theme-cactus
+theme_config:
+  colorscheme: light
+  copyright:
+    start_year: 2020
+  nav:
+    home: /
+    about: /about/
+    articles: /archives/
+    projects: https://github.com/drunderscore
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

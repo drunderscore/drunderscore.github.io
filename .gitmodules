@@ -2,3 +2,6 @@
 	path = themes/hexo-theme-aero-dual
 	url = https://github.com/drunderscore/drunderscore.github.io
 	branch = theme
+[submodule "themes/hexo-theme-cactus"]
+	path = themes/hexo-theme-cactus
+	url = https://github.com/probberechts/hexo-theme-cactus
