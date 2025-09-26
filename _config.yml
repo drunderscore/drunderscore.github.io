@@ -105,7 +105,19 @@ theme_config:
     home: /
     about: /about/
     articles: /archives/
-    projects: https://github.com/drunderscore
+    goals.tf: https://goals.tf
+  social_links:
+    -
+      icon: discord
+      label: dr.underscore
+    -
+      icon: github
+      label: GitHub
+      link: https://github.com/drunderscore
+    -
+      icon: mail
+      label: Email
+      link: mailto:hey@amberres.in
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
